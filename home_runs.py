@@ -80,8 +80,9 @@ aggregate = st.selectbox("How would you like to aggregate the number of home-run
 
 if aggregate == "Mean":
     calc_home_runs = home_runs[["Home Runs", group]].groupby(by = [group]).mean().sort_values(by = ["Home Runs"], ascending = False)
+    st.header(f"Average Number of Home-Runs by {group}")
 elif aggregate == "Total":
     calc_home_runs = home_runs[["Home Runs", group]].groupby(by = [group]).sum().sort_values(by = ["Home Runs"], ascending = False)
+    st.header(f"Total Number of Home-Runs by {group}")
 
-st.header(f"Average Number of Home-Runs by {group}")
 st.table(calc_home_runs)
