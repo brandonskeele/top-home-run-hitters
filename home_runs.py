@@ -45,7 +45,7 @@ with tab2:
     if num < 5:
         place_hr_num = home_runs[0:10].copy()
     elif num > 995:
-        place_hr = home_runs[991:1000].copy()
+        place_hr_num = home_runs[991:1000].copy()
     else:
         place_hr_num = home_runs[num-5:num+5].copy()
 
