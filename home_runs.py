@@ -17,22 +17,27 @@ with tab1:
     # fig_m = px.line(plot_df, x="year", y="n")
     # st.plotly_chart(fig_m)
     name = st.text_input("Insert a name", value="Shohei Ohtani")
-    num = home_runs[home_runs["Player Name"] == name].index[0]
-    
-    if num < 5:
-        place_hr = home_runs[0:10].copy()
-    elif num > 995:
-        place_hr = home_runs[991:1000].copy()
+    num = home_runs[home_runs["Player Name"] == name]#.index[0]
+    if num.empty:
+        st.subheader("Error:")
+        st.write("This player is not in the leaderboard of the top 1,000 home-run hitters or the player is listed with a different spelling in the data set. Please enter a new name.")
     else:
-        place_hr = home_runs[num-5:num+5].copy()
+        num = num.index[0]
+        
+        if num < 5:
+            place_hr = home_runs[0:10].copy()
+        elif num > 995:
+            place_hr = home_runs[991:1000].copy()
+        else:
+            place_hr = home_runs[num-5:num+5].copy()
 
-    for col in place_hr.columns:
-        val = place_hr[col][num]
-        place_hr[col][num] = f'<b><span style="background-color: #ADD8E6">{val}</span></b>'
+        for col in place_hr.columns:
+            val = place_hr[col][num]
+            place_hr[col][num] = f'<b><span style="background-color: #ADD8E6">{val}</span></b>'
 
-    place_hr.drop(columns="Player Quote", inplace=True)
+        place_hr.drop(columns="Player Quote", inplace=True)
 
-    st.markdown(place_hr.to_html(escape=False),unsafe_allow_html=True)
+        st.markdown(place_hr.to_html(escape=False),unsafe_allow_html=True)  
 
 with tab2:
     num = int(st.number_input("Insert a number", value=5, placeholder="Type a number...", min_value=1, max_value=1000, step=1))
